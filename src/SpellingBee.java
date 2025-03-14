@@ -45,13 +45,57 @@ public class SpellingBee {
     //  that will find the substrings recursively.
     public void generate() {
         // YOUR CODE HERE — Call your recursive method!
+        // new arraylist of strings [substrings]
+        // words = generateSubstrings(substrings, 0, 0, letters)
+        // new arraylist of permutations
+        // generatePermutations(permutations, "", letters)
+        // loop through every permuation
+            // create new arraylist called permutation substring
+            // set = to generateSubstrings(permutation substring, 0, 0, i)
     }
+    // function to generate substrings
+    public String[] generateSubstrings(){
+        // take in first and last strings and array
+        // base case: if first == word length, return array
+        // base case 2: if last >= word length, restart but with new first +1, last = first + 1 (call generateSubstring again)
+        // array.add (word.substring(first, last + 1);
+        // return generateSubstring(first, last + 1);
+    }
+    // function to generate permutations (return void), takes in arraylist of strings and two other strings (current and word)
+        // current = current permutation
+        // word = what you want to generate permuations on
+        // base case: if word length = 0
+            // permutations.add(current)
+            // return permutations
+        // for loop through word length
+            // create a new word, everything except for letter at i
+            // generate permutations of new word, add i to current
+            // for every substring in permutation substring
+                // check if it's already in words
+                // add to words
+
 
     // TODO: Apply mergesort to sort all words. Do this by calling ANOTHER method
     //  that will find the substrings recursively.
     public void sort() {
-        // YOUR CODE HERE
+        words = mergeSort(words, 0, words.size());
     }
+
+    public ArrayList<String> mergeSort(ArrayList<String> words, int start, int end) {
+        // base case: list with 1 element in it
+        if (start == end) {
+            return words;
+        }
+        //
+        ArrayList<String> arr1 = mergeSort(words, start, end / 2);
+        ArrayList<String> arr2 = mergeSort(words, end / 2 + 1, end);
+        // merge sorted lists LOOK AT DAILY CHECKS
+        if (arr1.get(0).compareTo(arr2.get(0)) > 0) {
+
+        }
+        return words;
+    }
+
 
     // Removes duplicates from the sorted list.
     public void removeDuplicates() {
