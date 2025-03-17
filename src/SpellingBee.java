@@ -90,10 +90,16 @@ public class SpellingBee {
         ArrayList<String> arr1 = mergeSort(words, start, end / 2);
         ArrayList<String> arr2 = mergeSort(words, end / 2 + 1, end);
         // merge sorted lists LOOK AT DAILY CHECKS
+        words = merge(arr1, arr2);
+        return words;
+    }
+
+    public ArrayList<String> merge(ArrayList<String> arr1, ArrayList<String> arr2) {
         if (arr1.get(0).compareTo(arr2.get(0)) > 0) {
 
         }
-        return words;
+        // if one array is empty
+
     }
 
 
