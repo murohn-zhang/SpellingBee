@@ -55,11 +55,20 @@ public class SpellingBee {
         }
 
         // Otherwise, for each letter in 'letters' create a permutation and find substrings of that permutation
+        for (int i = 0; i < letters.length(); i++) {
+            // Builds the front section of the substring
+            String front = word + letters.charAt(i);
+
+            // Builds a substring with the remaining letters, pass this into 'build words' as 'letters' since
+            // this is what we pull more letters from
+            String back = letters.substring(0, i) + letters.substring(i + 1);
+
+            // Call function again with new substrings to eventually build a permutation
+            buildWords(front, back);
+        }
 
         // Add new word to 'words'
         words.add(word);
-
-
     }
 
 
@@ -104,7 +113,8 @@ public class SpellingBee {
                     combined.add(arr1.get(index1));
                     index1++;
                 }
-                // No need for another check (can just use else) because we're only comparing between two (it's either one or the other)
+                // No need for another check (can just use else) because we're only comparing between two
+                // (it's either one or the other)
                 else {
                     combined.add(arr2.get(index2));
                     index2++;
