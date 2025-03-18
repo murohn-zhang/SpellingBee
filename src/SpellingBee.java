@@ -1,3 +1,4 @@
+// Spelling Bee by Murohn Zhang
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -44,62 +45,85 @@ public class SpellingBee {
     //  Store them all in the ArrayList words. Do this by calling ANOTHER method
     //  that will find the substrings recursively.
     public void generate() {
-        // YOUR CODE HERE — Call your recursive method!
-        // new arraylist of strings [substrings]
-        // words = generateSubstrings(substrings, 0, 0, letters)
-        // new arraylist of permutations
-        // generatePermutations(permutations, "", letters)
-        // loop through every permuation
-            // create new arraylist called permutation substring
-            // set = to generateSubstrings(permutation substring, 0, 0, i)
+        buildWords("", letters);
     }
-    // function to generate substrings
-    public String[] generateSubstrings(){
-        // take in first and last strings and array
-        // base case: if first == word length, return array
-        // base case 2: if last >= word length, restart but with new first +1, last = first + 1 (call generateSubstring again)
-        // array.add (word.substring(first, last + 1);
-        // return generateSubstring(first, last + 1);
-    }
-    // function to generate permutations (return void), takes in arraylist of strings and two other strings (current and word)
-        // current = current permutation
-        // word = what you want to generate permuations on
-        // base case: if word length = 0
-            // permutations.add(current)
-            // return permutations
-        // for loop through word length
-            // create a new word, everything except for letter at i
-            // generate permutations of new word, add i to current
-            // for every substring in permutation substring
-                // check if it's already in words
-                // add to words
+    public void buildWords(String word, String letters) {
+        // Base case: if we've gone through all of the letters in 'letters', add word to list and return
+        if (letters.isEmpty()) {
+            words.add(word);
+            return;
+        }
+
+        // Otherwise, for each letter in 'letters' create a permutation and find substrings of that permutation
+
+        // Add new word to 'words'
+        words.add(word);
 
 
-    // TODO: Apply mergesort to sort all words. Do this by calling ANOTHER method
-    //  that will find the substrings recursively.
+    }
+
+
+    // Sort all items in 'words'
     public void sort() {
         words = mergeSort(words, 0, words.size());
     }
 
     public ArrayList<String> mergeSort(ArrayList<String> words, int start, int end) {
-        // base case: list with 1 element in it
+        // Base case: list with 1 element in it
         if (start == end) {
-            return words;
+            // Return new array with singular string
+            ArrayList<String> single = new ArrayList<String>();
+            single.add(words.get(end));
+            return single;
         }
-        //
-        ArrayList<String> arr1 = mergeSort(words, start, end / 2);
-        ArrayList<String> arr2 = mergeSort(words, end / 2 + 1, end);
-        // merge sorted lists LOOK AT DAILY CHECKS
-        words = merge(arr1, arr2);
-        return words;
+        // Find midpoint of current array (average of start and end)
+        int mid = (start + end) / 2;
+
+        // Create two new arraylists of the halved array, sort them
+        ArrayList<String> arr1 = mergeSort(words, start, mid);
+        ArrayList<String> arr2 = mergeSort(words, mid + 1, end);
+
+        // Merge the two sorted arrays together
+        return merge(arr1, arr2);
+
     }
 
     public ArrayList<String> merge(ArrayList<String> arr1, ArrayList<String> arr2) {
-        if (arr1.get(0).compareTo(arr2.get(0)) > 0) {
+        // Make a new arraylist to hold combined arrays
+        ArrayList<String> combined = new ArrayList<String>();
 
+        // Variables to go through both arrays
+        int index1 = 0;
+        int index2 = 0;
+
+        // While we can still go through both arrays (both of them aren't empty)
+        while (index1 < arr1.size() && index2 < arr2.size()) {
+            // Add each index in both arrays to 'combined' in alphabetical order
+            {
+                if (arr1.get(index1).compareTo(arr2.get(index2)) <= 0) {
+                    combined.add(arr1.get(index1));
+                    index1++;
+                }
+                // No need for another check (can just use else) because we're only comparing between two (it's either one or the other)
+                else {
+                    combined.add(arr2.get(index2));
+                    index2++;
+                }
+            }
         }
-        // if one array is empty
 
+        // Add rest of array that's still filled
+        while (index1 < arr1.size()) {
+            combined.add(arr1.get(index1));
+            index1++;
+        }
+
+        while (index2 < arr2.size()) {
+            combined.add(arr2.get(index2));
+            index2++;
+        }
+
+        return combined;
     }
 
 
