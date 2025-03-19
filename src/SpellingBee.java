@@ -74,7 +74,7 @@ public class SpellingBee {
 
     // Sort all items in 'words'
     public void sort() {
-        words = mergeSort(words, 0, words.size());
+        words = mergeSort(words, 0, words.size() - 1);
     }
 
     public ArrayList<String> mergeSort(ArrayList<String> words, int start, int end) {
@@ -82,7 +82,7 @@ public class SpellingBee {
         if (start == end) {
             // Return new array with singular string
             ArrayList<String> single = new ArrayList<String>();
-            single.add(words.get(end));
+            single.add(words.get(start));
             return single;
         }
         // Find midpoint of current array (average of start and end)
@@ -90,7 +90,7 @@ public class SpellingBee {
 
         // Create two new arraylists of the halved array, sort them
         ArrayList<String> arr1 = mergeSort(words, start, mid);
-        ArrayList<String> arr2 = mergeSort(words, mid + 1, end);
+        ArrayList<String> arr2 = mergeSort(words, (mid + 1), end);
 
         // Merge the two sorted arrays together
         return merge(arr1, arr2);
@@ -149,10 +149,37 @@ public class SpellingBee {
         }
     }
 
-    // TODO: For each word in words, use binary search to see if it is in the dictionary.
-    //  If it is not in the dictionary, remove it from words.
+    // Make sure all the words created are valid words in the dictionary
     public void checkWords() {
-        // YOUR CODE HERE
+        // For each word in 'words', check if it's in the dictionary and if not, remove it
+        for (int i = 0; i < words.size(); i++) {
+            if (!check(words.get(i), 0, DICTIONARY_SIZE - 1)) {
+                words.remove(i);
+                i--;
+            }
+        }
+    }
+
+    public boolean check(String word, int start, int end) {
+        // Find current middle
+        int mid = (start + end) / 2;
+        // Base case: if middle of dictionary is word
+        if (DICTIONARY[mid].equals(word)) {
+            return true;
+        }
+
+        // Or if it's split it down to one word and isn't equal to the word
+        if (start == end) {
+            return false;
+        }
+
+        // If it comes before in the dictionary
+        if (word.compareTo(DICTIONARY[mid]) < 0) {
+            // Call check again with the first half of the dictionary
+            return check(word, start, mid);
+        }
+        // Otherwise call check with the second half
+        return check(word, mid + 1, end);
     }
 
     // Prints all valid words to wordList.txt
